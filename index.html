@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173c56">
+<title>Pain Assessment & Management Tool</title>
+<style>
+:root{--navy:#173c56;--blue:#246b91;--mint:#dff5ed;--bg:#f3f6f8;--ink:#20313d;--muted:#647582;--line:#dce5ea;--white:#fff;--warn:#fff2d8;--danger:#fde8e7;--good:#e5f5ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;line-height:1.55}
+header{background:linear-gradient(135deg,#173c56,#246b91);color:#fff;padding:28px 20px}
+.header-inner,main{max-width:980px;margin:auto}.eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#bfe8dc;font-weight:700}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);margin:.35rem 0}.subtitle{color:#d9e8f0;margin:0}
+main{padding:22px 16px 50px}.intro{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin-bottom:16px;color:var(--muted);font-size:.92rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;margin:14px 0;overflow:hidden;box-shadow:0 3px 14px #173c5608}
+.card-head{padding:15px 19px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-head h2{font-size:1.08rem;margin:0;color:var(--navy)}.step{font-size:.72rem;background:#eaf3f7;color:#245b78;border-radius:20px;padding:4px 10px;font-weight:700}
+.card-body{padding:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.field{min-width:0}.full{grid-column:1/-1}label,.label{display:block;font-weight:650;font-size:.9rem;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid #cbd8df;border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink);font:inherit;min-height:43px}
+textarea{min-height:86px;resize:vertical}input:focus,select:focus,textarea:focus{outline:3px solid #c9e5f1;border-color:var(--blue)}
+.hint{font-size:.78rem;color:var(--muted);margin-top:5px}.choices{display:flex;flex-wrap:wrap;gap:9px}.choice{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:.88rem;font-weight:400;margin:0}.choice input{width:auto;min-height:auto;accent-color:var(--blue)}
+.scale-box{background:#f5f8fa;border:1px solid var(--line);border-radius:13px;padding:16px}
+.score-line{display:flex;justify-content:space-between;align-items:center;gap:12px}.score{font-size:2rem;font-weight:800;color:var(--navy)}.level{font-size:.82rem;font-weight:700;padding:5px 10px;border-radius:30px;background:var(--warn)}
+input[type=range]{padding:0;accent-color:var(--blue);min-height:28px}
+.scale-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem}
+.bodymap{display:grid;grid-template-columns:1fr 1fr;gap:12px}.bodymap svg{width:100%;max-height:230px;background:#f8fafb;border:1px solid var(--line);border-radius:12px}.bodymap .sil{fill:#e5edf1;stroke:#8296a2;stroke-width:2}.bodymap .hot{fill:#ef8b78;stroke:#bd5c4e;stroke-width:2;cursor:pointer}.bodymap .hot:focus{outline:3px solid #246b91}
+.alert{border-radius:11px;padding:13px 15px;background:var(--good);font-size:.9rem}.alert.warn{background:var(--warn)}.alert.danger{background:var(--danger)}
+.summary{background:#f7fafb;border:1px solid var(--line);border-radius:12px;padding:16px;white-space:normal}.summary h3{margin:0 0 10px;color:var(--navy)}.summary p{margin:5px 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button{border:0;border-radius:9px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer;background:var(--navy);color:#fff}button.secondary{background:#e9f0f4;color:var(--navy)}button:hover{filter:brightness(.96)}
+footer{text-align:center;color:var(--muted);font-size:.78rem;padding:20px}
+@media(max-width:650px){.card-body{grid-template-columns:1fr}.full{grid-column:auto}.bodymap{grid-template-columns:1fr 1fr}.card-head{padding:13px 15px}.card-body{padding:15px}}
+@media print{body{background:#fff}.actions,header .eyebrow{display:none}.card{break-inside:avoid;box-shadow:none}main{max-width:none;padding:0}.intro{border:0}button{display:none}input,select,textarea{border:0;border-bottom:1px solid #aaa;padding:4px}.card-head{background:#f2f5f7}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<div class="eyebrow">Clinical Nursing Practice • Digital Form</div>
+<h1>Pain Assessment &amp; Management Tool</h1>
+<p class="subtitle">แบบประเมินความปวดและการจัดการความปวดสำหรับนักศึกษาพยาบาล</p>
+</div></header>
+<main>
+<div class="intro"><strong>คำแนะนำ:</strong> ใช้แบบฟอร์มนี้เพื่อฝึกประเมินและบันทึกข้อมูลทางการพยาบาล เลือกเครื่องมือให้เหมาะกับความสามารถในการสื่อสารของผู้ป่วย และรายงานพยาบาลวิชาชีพเมื่อพบอาการผิดปกติหรือความปวดรุนแรง</div>
+
+<section class="card"><div class="card-head"><h2>ข้อมูลทั่วไปของผู้ป่วย</h2><span class="step">01 / PATIENT</span></div>
+<div class="card-body">
+<div class="field"><label for="pid">รหัสผู้ป่วย / HN (ไม่ใช้ชื่อจริง)</label><input id="pid" placeholder="เช่น P-001"></div>
+<div class="field"><label for="age">อายุ (ปี)</label><input id="age" type="number" min="0" placeholder="อายุ"></div>
+<div class="field"><label for="date">วันที่ประเมิน</label><input id="date" type="date"></div>
+<div class="field"><label for="time">เวลาที่ประเมิน</label><input id="time" type="time"></div>
+<div class="field"><label for="ward">หอผู้ป่วย</label><input id="ward" placeholder="ระบุหอผู้ป่วย"></div>
+<div class="field"><label for="dx">การวินิจฉัยโรค (Medical diagnosis)</label><input id="dx" placeholder="ระบุการวินิจฉัย"></div>
+<div class="field full"><label>ผู้ป่วยสามารถสื่อสารและประเมินความปวดด้วยตนเองได้หรือไม่?</label>
+<div class="choices"><label class="choice"><input type="radio" name="communicate" value="ได้" checked> ได้</label><label class="choice"><input type="radio" name="communicate" value="ไม่ได้"> ไม่ได้</label></div>
+<div class="hint">หากไม่สามารถรายงานความปวดได้ ให้เลือกเครื่องมือสังเกตพฤติกรรมที่เหมาะสม เช่น FLACC หรือ CPOT ตามกลุ่มผู้ป่วยและแนวทางหน่วยงาน ไม่ควรใช้ NRS แทนโดยอัตโนมัติ</div></div>
+<div class="field full"><label for="alttool">เครื่องมือประเมิน (กรณีไม่สามารถใช้ NRS)</label><select id="alttool"><option value="ไม่เกี่ยวข้อง / ใช้ NRS ได้">ไม่เกี่ยวข้อง / ใช้ NRS ได้</option><option>FLACC</option><option>CPOT</option><option>เครื่องมืออื่นตามแนวทางหน่วยงาน</option></select></div>
+</div></section>
+
+<section class="card"><div class="card-head"><h2>การคัดกรองและระดับความปวด</h2><span class="step">02 / NRS</span></div>
+<div class="card-body">
+<div class="field full"><label>ผู้ป่วยมีอาการปวดหรือไม่?</label><div class="choices"><label class="choice"><input type="radio" name="pain" value="มี" checked> มี</label><label class="choice"><input type="radio" name="pain" value="ไม่มี"> ไม่มี</label></div></div>
+<div class="field full scale-box"><div class="score-line"><label for="nrs">NRS ขณะประเมิน (0–10)</label><span class="score" id="nrsValue">5/10</span></div><input id="nrs" type="range" min="0" max="10" value="5"><div class="score-line"><span class="level" id="nrsLevel">ปวดปานกลาง</span><span class="hint">0 = ไม่ปวด • 10 = ปวดมากที่สุด</span></div><div class="scale-labels"><span>0</span><span>1–3 เล็กน้อย</span><span>4–6 ปานกลาง</span><span>7–10 รุนแรง</span></div></div>
+<div class="field"><label for="nrsrest">NRS ขณะพัก</label><input id="nrsrest" type="number" min="0" max="10" placeholder="0–10"></div>
+<div class="field"><label for="nrsmove">NRS ขณะเคลื่อนไหว</label><input id="nrsmove" type="number" min="0" max="10" placeholder="0–10"></div>
+<div class="field full"><label>ตำแหน่งที่ปวด (เลือกได้จากแผนภาพหรือรายการ)</label>
+<div class="bodymap">
+<svg viewBox="0 0 180 230" role="img" aria-label="แผนภาพร่างกายด้านหน้า เลือกบริเวณที่ปวด">
+<circle class="sil" cx="90" cy="24" r="15"/><path class="sil" d="M73 43 Q90 36 107 43 L117 95 L108 111 L105 164 L99 218 L82 218 L76 164 L73 111 L63 95 Z"/>
+<path class="sil" d="M65 48 L43 58 L28 111 L37 115 L57 79 L67 96 M115 48 L137 58 L152 111 L143 115 L123 79 L113 96"/>
+<circle class="hot" data-area="ศีรษะ" cx="90" cy="24" r="9" tabindex="0"/>
+<ellipse class="hot" data-area="หน้าอก" cx="90" cy="75" rx="19" ry="15" tabindex="0"/>
+<ellipse class="hot" data-area="ช่องท้อง" cx="90" cy="112" rx="17" ry="16" tabindex="0"/>
+<ellipse class="hot" data-area="แขนซ้าย" cx="42" cy="83" rx="7" ry="17" tabindex="0"/>
+<ellipse class="hot" data-area="แขนขวา" cx="138" cy="83" rx="7" ry="17" tabindex="0"/>
+<ellipse class="hot" data-area="ขาซ้าย" cx="80" cy="174" rx="7" ry="25" tabindex="0"/>
+<ellipse class="hot" data-area="ขาขวา" cx="100" cy="174" rx="7" ry="25" tabindex="0"/>
+</svg>
+<svg viewBox="0 0 180 230" role="img" aria-label="แผนภาพร่างกายด้านหลัง เลือกบริเวณที่ปวด">
+<circle class="sil" cx="90" cy="24" r="15"/><path class="sil" d="M73 43 Q90 36 107 43 L117 95 L108 111 L105 164 L99 218 L82 218 L76 164 L73 111 L63 95 Z"/>
+<path class="sil" d="M65 48 L43 58 L28 111 L37 115 L57 79 L67 96 M115 48 L137 58 L152 111 L143 115 L123 79 L113 96"/>
+<ellipse class="hot" data-area="หลังส่วนบน" cx="90" cy="76" rx="18" ry="14" tabindex="0"/>
+<ellipse class="hot" data-area="หลังส่วนล่าง" cx="90" cy="111" rx="16" ry="14" tabindex="0"/>
+<ellipse class="hot" data-area="สะโพก" cx="90" cy="139" rx="19" ry="10" tabindex="0"/>
+</svg>
+</div><div class="hint">แตะบริเวณสีส้มเพื่อเลือกตำแหน่ง (แผนภาพด้านหน้าและด้านหลัง)</div></div>
+<div class="field"><label for="location">ตำแหน่งความปวด</label><input id="location" placeholder="เช่น ช่องท้องด้านขวา"></div>
+<div class="field"><label for="radiation">มีการปวดร้าวไปบริเวณอื่นหรือไม่?</label><input id="radiation" placeholder="ระบุบริเวณ / ไม่มี"></div>
+</div></section>
+
+<section class="card"><div class="card-head"><h2>ลักษณะ ระยะเวลา และปัจจัยที่เกี่ยวข้อง</h2><span class="step">03 / CHARACTER</span></div><div class="card-body">
+<div class="field"><label for="character">ลักษณะความปวด</label><select id="character"><option>ปวดตื้อ</option><option>ปวดแปลบ</option><option>ปวดเสียด</option><option>ปวดแสบ</option><option>ปวดตุบ ๆ</option><option>ปวดบีบรัด</option><option>ปวดร้าว</option><option>อื่น ๆ</option></select></div>
+<div class="field"><label for="onset">เริ่มปวดเมื่อใด</label><input id="onset" placeholder="เช่น 2 ชั่วโมงก่อน"></div>
+<div class="field"><label for="duration">ระยะเวลา / รูปแบบ</label><select id="duration"><option>ต่อเนื่อง</option><option>เป็น ๆ หาย ๆ</option><option>เกิดขึ้นเฉียบพลัน</option><option>เรื้อรัง</option></select></div>
+<div class="field"><label for="frequency">ความถี่ / ระยะเวลาต่อครั้ง</label><input id="frequency" placeholder="เช่น วันละ 3 ครั้ง ครั้งละ 10 นาที"></div>
+<div class="field"><label for="trigger">ปัจจัยกระตุ้น</label><input id="trigger" placeholder="เช่น ไอ เคลื่อนไหว เปลี่ยนท่า"></div>
+<div class="field"><label for="relief">ปัจจัยบรรเทา</label><input id="relief" placeholder="เช่น พัก เปลี่ยนท่า ยาที่ได้รับ"></div>
+<div class="field"><label for="symptoms">อาการร่วม</label><input id="symptoms" placeholder="เช่น คลื่นไส้ เหงื่อออก หรือไม่มี"></div>
+<div class="field"><label for="impact">ผลกระทบต่อการทำหน้าที่</label><select id="impact"><option>ไม่มีผลกระทบชัดเจน</option><option>รบกวนการนอน</option><option>จำกัดการเคลื่อนไหว</option><option>รบกวนการหายใจ / ไอ</option><option>รับประทานอาหารได้น้อยลง</option><option>กระทบกิจวัตรประจำวัน</option><option>หลายด้าน</option></select></div>
+<div class="field full"><label for="subjective">ข้อมูลจากคำบอกเล่าผู้ป่วย (Subjective data)</label><textarea id="subjective" placeholder="บันทึกคำบอกเล่าที่สำคัญของผู้ป่วย"></textarea></div>
+<div class="field full"><label for="objective">ข้อมูลจากการสังเกต / ตรวจประเมิน (Objective data)</label><textarea id="objective" placeholder="เช่น สีหน้า ท่าทาง การเกร็ง การเคลื่อนไหว และสัญญาณชีพที่เกี่ยวข้อง"></textarea></div>
+</div></section>
+
+<section class="card"><div class="card-head"><h2>การพยาบาลเพื่อจัดการความปวด</h2><span class="step">04 / INTERVENTION</span></div><div class="card-body">
+<div class="field full"><label>วิธีการที่ไม่ใช้ยา (Non-pharmacological)</label><div class="choices">
+<label class="choice"><input type="checkbox" name="intervention" value="จัดท่าลดความปวด"> จัดท่าลดความปวด</label>
+<label class="choice"><input type="checkbox" name="intervention" value="สอนการหายใจช้าและลึก"> หายใจช้าและลึก</label>
+<label class="choice"><input type="checkbox" name="intervention" value="Relaxation"> Relaxation</label>
+<label class="choice"><input type="checkbox" name="intervention" value="เบี่ยงเบนความสนใจ"> เบี่ยงเบนความสนใจ</label>
+<label class="choice"><input type="checkbox" name="intervention" value="ประคบเย็นตามข้อบ่งชี้"> ประคบเย็น*</label>
+<label class="choice"><input type="checkbox" name="intervention" value="ประคบอุ่นตามข้อบ่งชี้"> ประคบอุ่น*</label>
+<label class="choice"><input type="checkbox" name="intervention" value="สนับสนุนด้านจิตใจ"> สนับสนุนด้านจิตใจ</label>
+<label class="choice"><input type="checkbox" name="intervention" value="อื่น ๆ"> อื่น ๆ</label>
+</div><div class="hint">*เลือกใช้เมื่อมีข้อบ่งชี้ ไม่มีข้อห้าม และเป็นไปตามแนวทางหน่วยงาน</div></div>
+<div class="field full"><label for="medication">การให้ยา (Pharmacological intervention) ตามแผนการรักษา</label><textarea id="medication" placeholder="ชื่อยา ขนาดยา วิธีให้ยา เวลาให้ยา และผู้ให้ยา"></textarea></div>
+<div class="field full"><label for="monitor">การเฝ้าระวัง / รายละเอียดการปฏิบัติ</label><textarea id="monitor" placeholder="เช่น เฝ้าระวังระดับความรู้สึกตัว การหายใจ อาการไม่พึงประสงค์ และการตอบสนอง"></textarea></div>
+</div></section>
+
+<section class="card"><div class="card-head"><h2>การประเมินซ้ำหลัง Intervention</h2><span class="step">05 / REASSESSMENT</span></div><div class="card-body">
+<div class="field"><label for="after">NRS หลัง Intervention (0–10)</label><input id="after" type="number" min="0" max="10" value="2"></div>
+<div class="field"><label for="aftertime">เวลาที่ประเมินซ้ำ</label><input id="aftertime" type="time"></div>
+<div class="field full"><div class="scale-box"><div class="score-line"><span>คะแนนก่อน</span><strong id="beforeDisplay">5/10</strong><span>คะแนนหลัง</span><strong id="afterDisplay">2/10</strong></div><div class="score-line" style="margin-top:10px"><span>ผลต่างคะแนน</span><strong id="difference" class="score" style="font-size:1.3rem">ลดลง 3 คะแนน</strong></div><div class="hint">เปรียบเทียบคะแนนเพื่อประกอบการประเมิน ต้องพิจารณาความสบาย การทำหน้าที่ และอาการร่วมด้วย</div></div></div>
+<div class="field"><label for="adverse">อาการไม่พึงประสงค์หลัง Intervention</label><select id="adverse"><option>ไม่มี</option><option>มี — ระบุในบันทึกเพิ่มเติม</option><option>ยังไม่ได้ประเมิน</option></select></div>
+<div class="field"><label for="response">การตอบสนอง / ผลลัพธ์</label><select id="response"><option>อาการปวดลดลง</option><option>อาการปวดไม่เปลี่ยนแปลง</option><option>อาการปวดเพิ่มขึ้น</option><option>ยังไม่สามารถประเมินผลได้</option></select></div>
+<div class="field full"><label for="ongoing">แผนการพยาบาลต่อเนื่อง</label><textarea id="ongoing" placeholder="ระบุการติดตาม ประเมินซ้ำ การดูแลต่อเนื่อง และการรายงานพยาบาลวิชาชีพ"></textarea></div>
+</div></section>
+
+<section class="card"><div class="card-head"><h2>การประเมินผลและบันทึกทางการพยาบาล</h2><span class="step">06 / DOCUMENTATION</span></div><div class="card-body">
+<div class="field"><label for="goal">เป้าหมายการจัดการความปวด</label><input id="goal" placeholder="เช่น ผู้ป่วยรายงานว่าปวดลดลงอยู่ในระดับที่ยอมรับได้"></div>
+<div class="field"><label for="goalresult">ผลการบรรลุเป้าหมาย</label><select id="goalresult"><option>บรรลุเป้าหมาย</option><option>บรรลุบางส่วน</option><option>ไม่บรรลุเป้าหมาย</option><option>ยังประเมินไม่ได้</option></select></div>
+<div class="field"><label for="student">รหัสนักศึกษาพยาบาล / ผู้บันทึก</label><input id="student" placeholder="ระบุรหัสผู้บันทึก"></div>
+<div class="field"><label for="supervisor">ผู้ตรวจสอบ / พยาบาลผู้รับทราบ</label><input id="supervisor" placeholder="ระบุผู้ตรวจสอบ"></div>
+<div class="field full"><div id="alertBox" class="alert">Clinical safety: ประเมินความปวดและติดตามตามแผนการดูแล</div></div>
+<div class="field full"><div id="summary" class="summary" aria-live="polite"><h3>สรุปผลการประเมิน</h3><p>กรอกข้อมูลและกด “สร้างสรุปผล” เพื่อจัดทำบันทึกสำหรับตรวจสอบ</p></div>
+<div class="actions"><button type="button" id="generate">สร้างสรุปผล</button><button type="button" class="secondary" id="save">บันทึกลง Google Sheets</button><button type="button" class="secondary" id="copy">คัดลอกสรุป</button><span id="saveStatus" class="hint" role="status">สถานะ: ยังไม่บันทึก</span><button type="button" class="secondary" id="print">พิมพ์ / บันทึก PDF</button><button type="reset" class="secondary" id="reset">ล้างแบบฟอร์ม</button></div></div>
+</div></section>
+<footer>ต้นแบบเพื่อการศึกษา • ไม่ใช่เวชระเบียนที่ได้รับการรับรอง • ต้องผ่านการตรวจสอบโดยอาจารย์/หน่วยงานก่อนใช้กับผู้ป่วยจริง</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const nrs=$('nrs'), after=$('after');
+function level(n){n=Number(n);return n===0?'ไม่ปวด':n<=3?'ปวดเล็กน้อย':n<=6?'ปวดปานกลาง':'ปวดรุนแรง'}
+function update(){
+ const n=Number(nrs.value),a=after.value===''?null:Number(after.value);
+ $('nrsValue').textContent=n+'/10';$('nrsLevel').textContent=level(n);
+ $('beforeDisplay').textContent=n+'/10';$('afterDisplay').textContent=a===null?'—':a+'/10';
+ const d=a===null?null:n-a;
+ $('difference').textContent=d===null?'ยังไม่ระบุ':d>0?'ลดลง '+d+' คะแนน':d<0?'เพิ่มขึ้น '+Math.abs(d)+' คะแนน':'ไม่เปลี่ยนแปลง';
+ const alert=$('alertBox');
+ if(n>=7 || (a!==null&&a>n)){alert.className='alert danger';alert.textContent='ควรรายงานพยาบาลวิชาชีพโดยเร็วและประเมินผู้ป่วยเพิ่มเติม โดยเฉพาะเมื่อปวดรุนแรง/เพิ่มขึ้น หรือมีอาการผิดปกติร่วม'}
+ else if(a!==null&&a===n){alert.className='alert warn';alert.textContent='คะแนนไม่เปลี่ยนแปลง: ประเมินซ้ำ ทบทวนสาเหตุและ Intervention และรายงานผู้รับผิดชอบตามแนวทาง'}
+ else{alert.className='alert';alert.textContent='ติดตามอาการและประเมินซ้ำตามความเหมาะสม พร้อมบันทึกการตอบสนองของผู้ป่วย'}
+}
+nrs.addEventListener('input',update);after.addEventListener('input',update);
+document.querySelectorAll('.bodymap [data-area]').forEach(el=>{
+ const choose=()=>{$('location').value=el.dataset.area};
+ el.addEventListener('click',choose);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}});
+});
+function val(id){return $(id).value.trim()||'ไม่ได้ระบุ'}
+function checked(name){return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(x=>x.value).join(', ')||'ไม่ได้ระบุ'}
+function makeSummary(){
+ const fields=[
+ ['รหัสผู้ป่วย',val('pid')],['อายุ',val('age')+' ปี'],['วันที่/เวลา',val('date')+' '+val('time')],['หอผู้ป่วย',val('ward')],['Diagnosis',val('dx')],
+ ['ความสามารถในการสื่อสาร',checked('communicate')],['เครื่องมือทางเลือก',val('alttool')],['มีอาการปวด',checked('pain')],
+ ['NRS ก่อน Intervention',nrs.value+'/10 ('+level(nrs.value)+')'],['NRS ขณะพัก',val('nrsrest')],['NRS ขณะเคลื่อนไหว',val('nrsmove')],
+ ['ตำแหน่ง',val('location')],['การปวดร้าว',val('radiation')],['ลักษณะ',val('character')],['เริ่มปวด',val('onset')],['ระยะเวลา',val('duration')],['ความถี่',val('frequency')],['ปัจจัยกระตุ้น',val('trigger')],['ปัจจัยบรรเทา',val('relief')],['อาการร่วม',val('symptoms')],['ผลกระทบ',val('impact')],
+ ['Subjective data',val('subjective')],['Objective data',val('objective')],
+ ['Non-pharmacological intervention',checked('intervention')],['ยา',val('medication')],['การเฝ้าระวัง',val('monitor')],
+ ['NRS หลัง Intervention',val('after')+'/10'+(after.value!==''?' ('+level(after.value)+')':'')],['เวลาประเมินซ้ำ',val('aftertime')],['อาการไม่พึงประสงค์',val('adverse')],['ผลการตอบสนอง',val('response')],['แผนต่อเนื่อง',val('ongoing')],['เป้าหมาย',val('goal')],['ผลเป้าหมาย',val('goalresult')],['ผู้บันทึก',val('student')],['ผู้ตรวจสอบ',val('supervisor')]
+ ];
+ $('summary').innerHTML='<h3>สรุปผลการประเมินความปวด</h3>'+fields.map(([k,v])=>'<p><strong>'+escapeHtml(k)+':</strong> '+escapeHtml(v)+'</p>').join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('generate').addEventListener('click',()=>{update();makeSummary();$('summary').scrollIntoView({behavior:'smooth',block:'nearest'})});
+function collectPayload(){
+ const g=id=>$(id)?$(id).value:'';
+ const c=name=>[...document.querySelectorAll('input[name="'+name+'"]:checked')].map(x=>x.value);
+ return {patientId:g('pid'),age:g('age'),assessmentDate:g('date'),assessmentTime:g('time'),ward:g('ward'),diagnosis:g('dx'),canSelfReport:c('communicate')[0]||'',alternativeTool:g('alttool'),hasPain:c('pain')[0]||'',nrs:g('nrs'),nrsRest:g('nrsrest'),nrsMovement:g('nrsmove'),painLocation:g('location'),radiation:g('radiation'),character:g('character'),onset:g('onset'),duration:g('duration'),frequency:g('frequency'),aggravating:g('trigger'),relieving:g('relief'),associatedSymptoms:g('symptoms'),functionalImpact:g('impact'),subjective:g('subjective'),objective:g('objective'),nonPharm:c('intervention'),medication:g('medication'),monitoring:g('monitor'),postNrs:g('after'),reassessmentTime:g('aftertime'),adverseEffects:g('adverse'),response:g('response'),ongoingPlan:g('ongoing'),goal:g('goal'),goalResult:g('goalresult'),studentId:g('student'),supervisor:g('supervisor')};
+}
+$('save').addEventListener('click',()=>{
+ if(!collectPayload().patientId){$('saveStatus').textContent='กรุณาระบุรหัสผู้ป่วยก่อนบันทึก';$('pid').focus();return;}
+ if(!(window.google&&google.script&&google.script.run)){$('saveStatus').textContent='โหมด Standalone: ต้องเปิดผ่าน Apps Script Web App จึงจะบันทึกลง Google Sheets ได้';return;}
+ $('save').disabled=true;$('saveStatus').textContent='กำลังบันทึก...';
+ google.script.run.withSuccessHandler(r=>{$('save').disabled=false;$('saveStatus').textContent='บันทึกสำเร็จ • แถว '+r.row;}).withFailureHandler(e=>{$('save').disabled=false;$('saveStatus').textContent='บันทึกไม่สำเร็จ: '+(e.message||e);}).savePainAssessment(collectPayload());
+});
+
+$('copy').addEventListener('click',async()=>{makeSummary();try{await navigator.clipboard.writeText($('summary').innerText);$('copy').textContent='คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกสรุป',1600)}catch(e){alert('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาเลือกข้อความในสรุปแล้วคัดลอก')}})
+$('print').addEventListener('click',()=>{makeSummary();window.print()});
+$('reset').addEventListener('click',()=>setTimeout(()=>{nrs.value=5;after.value=2;$('date').value=new Date().toISOString().slice(0,10);$('summary').innerHTML='<h3>สรุปผลการประเมิน</h3><p>กรอกข้อมูลและกด “สร้างสรุปผล” เพื่อจัดทำบันทึกสำหรับตรวจสอบ</p>';update()},0));
+$('date').value=new Date().toISOString().slice(0,10);update();
+</script>
+</body></html>
